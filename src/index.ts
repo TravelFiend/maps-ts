@@ -9,4 +9,3 @@ new google.maps.Map(document.getElementById('map'), {
   }
 });
 
-console.log(google);
