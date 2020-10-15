@@ -13,7 +13,7 @@ export class Company {
       this.catchPhrase = faker.company.catchPhrase(),
       this.location = {
         lat: +faker.address.latitude(),
-        lng: +faker.address.longitude(),
+        lng: +faker.address.longitude()
       }
   }
 }
