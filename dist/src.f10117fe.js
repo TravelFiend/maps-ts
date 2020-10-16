@@ -100430,12 +100430,16 @@ var User =
 /** @class */
 function () {
   function User() {
-    this.name = faker_1.default.name.firstName();
+    this.name = faker_1.default.name.firstName() + " " + faker_1.default.name.lastName();
     this.location = {
       lat: +faker_1.default.address.latitude(),
       lng: +faker_1.default.address.longitude()
     };
   }
+
+  User.prototype.info = function () {
+    return "" + this.name;
+  };
 
   return User;
 }();
@@ -100467,6 +100471,10 @@ function () {
     };
   }
 
+  Company.prototype.info = function () {
+    return "<div>\n    <h1>" + this.companyName + "</h1>\n    <p>" + this.catchPhrase + "</p>\n    </div>";
+  };
+
   return Company;
 }();
 
@@ -100492,28 +100500,25 @@ function () {
     });
   }
 
-  Map.prototype.addUserMarker = function (user) {
-    new google.maps.Marker({
+  Map.prototype.addMarker = function (mappable) {
+    var _this = this;
+
+    var marker = new google.maps.Marker({
       position: {
-        lat: user.location.lat,
-        lng: user.location.lng
+        lat: mappable.location.lat,
+        lng: mappable.location.lng
       },
       map: this.googleMap
+    });
+    marker.addListener('click', function () {
+      var infoWindow = new google.maps.InfoWindow({
+        content: mappable.info()
+      });
+      infoWindow.open(_this.googleMap, marker);
     });
   };
 
   ;
-
-  Map.prototype.addCompanyMarker = function (company) {
-    new google.maps.Marker({
-      position: {
-        lat: company.location.lat,
-        lng: company.location.lng
-      },
-      map: this.googleMap
-    });
-  };
-
   return Map;
 }();
 
@@ -100534,8 +100539,8 @@ var Map_1 = require("./Map");
 var user = new User_1.User();
 var company = new Company_1.Company();
 var map = new Map_1.Map('map');
-map.addUserMarker(user);
-map.addCompanyMarker(company);
+map.addMarker(user);
+map.addMarker(company);
 },{"./User":"src/User.ts","./Company":"src/Company.ts","./Map":"src/Map.ts"}],"../../../.nvm/versions/node/v14.13.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -100564,7 +100569,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64392" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57409" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
